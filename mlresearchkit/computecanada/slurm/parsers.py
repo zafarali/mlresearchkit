@@ -5,9 +5,9 @@ TEMPLATE = """# !/bin/bash
 #SBATCH --account={JOBACCOUNT}
 #SBATCH --time={JOBTIME}
 #SBATCH --job-name={JOBNAME}
-#SBATCH -n={N_CPUS}
-#SBATCH -o={OUTFILE}.out
-#SBATCH -e={ERRORFILE}.err
+#SBATCH --n-tasks={N_CPUS}
+#SBATCH -o {LOGDIR}/{OUTFILE}.out
+#SBATCH -e {LOGDIR}/{ERRORFILE}.err
 #SBATCH --mem={JOBMEM}M"""
 
 def create_slurm_header(args):
@@ -22,7 +22,8 @@ def create_slurm_header(args):
                              JOBNAME=args.cc_job_name,
                              OUTFILE=args.cc_job_name,
                              ERRORFILE=args.cc_job_name,
-                             JOBMEM=args.cc_mem)
+                             JOBMEM=args.cc_mem,
+                             LOGDIR=args.cc_log)
 
     if args.cc_gpus > 0: tmpstr += parse_gpu_arguments(args)
     if args.cc_mail is not False: tmpstr += parse_mail_arguments(args)
@@ -51,14 +52,16 @@ def create_slurm_arguments(parser):
 
     parser.add_argument('--cc-gpus', '--cc-gpus', type=int, default=0,
                         help='Number of GPUs to request')
+    parser.add_argument('--cc-log', '--cc-log', type=str, default='./',
+                        help='Log directory')
     parser.add_argument('--cc-time', '--cc-time', type=str,
                         help="""Time for the job to run: Acceptable time formats include "minutes",
                         "minutes:seconds", "hours:minutes:seconds", "days-hours", "days-hours:minutes"
                         and "days-hours:minutes:seconds".""",
-                        default='0-15:00')
+                        default='0-00:15:00')
     parser.add_argument('-cc-cpus', '--cc-cpus', type=int, default=1,
                         help='CPUs to request')
-    parser.add_argument('-cc-mem', '--cc-mem', default=1024, type=int)
+    parser.add_argument('-cc-mem', '--cc-mem', default=8192, type=int)
     parser.add_argument('-cc-account', '--cc-account', required=True)
     parser.add_argument('-cc-other', '--cc-other', default='',
                         help='Other arguments to append to the run')
