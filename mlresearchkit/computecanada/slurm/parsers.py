@@ -1,11 +1,11 @@
 import argparse
 import time
 
-TEMPLATE = """# !/bin/bash
+TEMPLATE = """#!/bin/bash
 #SBATCH --account={JOBACCOUNT}
 #SBATCH --time={JOBTIME}
 #SBATCH --job-name={JOBNAME}
-#SBATCH --n-tasks={N_CPUS}
+#SBATCH --ntasks={N_CPUS}
 #SBATCH -o {LOGDIR}/{OUTFILE}.out
 #SBATCH -e {LOGDIR}/{ERRORFILE}.err
 #SBATCH --mem={JOBMEM}M"""
