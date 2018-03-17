@@ -1,17 +1,16 @@
-import argparse
-
 TEMPLATE = """#!/bin/bash
-#SBATCH --account={JOBACCOUNT}
-#SBATCH --time={JOBTIME}
-#SBATCH --job-name={JOBNAME}
-#SBATCH --ntasks={N_CPUS}
-#SBATCH -o {LOGDIR}/{OUTFILE}.out
-#SBATCH -e {LOGDIR}/{ERRORFILE}.err
-#SBATCH --mem={JOBMEM}M"""
+#PBS -l nodes=1:ppn={N_CPUS}
+#PBS -l walltime={JOBTIME}
+#PBS -A {JOBACCOUNT}
+#PBS -N {JOBNAME}
+#PBS -o {LOGDIR}/{OUTFILE}.txt
+#PBS -e {LOGDIR}/{ERRORFILE}.txt
+#PBS -q {QUEUE}
+#PBS -l mem={JOBMEM}MB"""
 
-def create_slurm_header(args):
+def create_moab_header(args):
     """
-    Give a parsed argparse object, create a header for the slurm job
+    Give a parsed argparse object, create a header for the moab job
     :param args:
     :return:
     """
@@ -22,7 +21,8 @@ def create_slurm_header(args):
                              OUTFILE=args.cc_job_name,
                              ERRORFILE=args.cc_job_name,
                              JOBMEM=args.cc_mem,
-                             LOGDIR=args.cc_log)
+                             LOGDIR=args.cc_log,
+                             QUEUE=args.cc_queue)
 
     if args.cc_gpus > 0: tmpstr += parse_gpu_arguments(args)
     if args.cc_mail is not False: tmpstr += parse_mail_arguments(args)
@@ -30,11 +30,10 @@ def create_slurm_header(args):
     return tmpstr
 
 def parse_gpu_arguments(args):
-   tmpstr = '\n#SBATCH --gres=gpu:{}'.format(args.cc_gpus)
-   # tmpstr += '\n#SBATCH --cpus-per-task={}'.format(6 if args.cc_cluster_name=='cedar' else 16)
+   tmpstr = '\n#PBS -l gpus={}:exclusive_process'.format(args.cc_gpus)
    return tmpstr
 
 def parse_mail_arguments(args):
-    tmpstr = """\n#SBATCH --mail-type=ALL
-#SBATCH --mail-user={}"""
+    tmpstr = """\n#PBS -m abe
+#PBS -M {}"""
     return tmpstr.format(args.cc_mail)
