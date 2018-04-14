@@ -5,9 +5,13 @@ This is a collection of tools that I use when I am doing research in machine lea
 They include scripts that help me work on clusters, plotting, analysis and aggregating
 data from multiple runs of the same experiment.
 
-Created by [Zafarali Ahmed](http://www.zafarali.me). I do not intend for this tool to be used widely, so expect things to break occasionally.
+Created by [Zafarali Ahmed](http://www.zafarali.me). I currently do not intend for this tool to be used widely, so expect things to break occasionally while I actively add new things.
 
 
 ## Clusters
 
 - `mlresearchkit.computecanada.slurm` contains some helper scripts for you to create submissions on SLURM in particular CEDAR and GRAHAM on Compute Canada clusters.
+
+## Command-line tools
+
+- `cluster-submit` WIP
