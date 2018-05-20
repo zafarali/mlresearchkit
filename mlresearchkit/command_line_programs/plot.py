@@ -1,6 +1,6 @@
 import argparse
 from ..plotting.loaders import load_data_for_experiments
-from ..plotting.plot import plot_experiments
+from ..plotting.plot import plot_experiments, set_seaborn_defaults
 
 def create_argparse():
     parser = argparse.ArgumentParser('plot subroutine',
@@ -35,11 +35,19 @@ def create_argparse():
     parser.add_argument('--to-pdf', default=False, action='store_true')
     parser.add_argument('--to-png', default=False, action='store_true')
     parser.add_argument('--silent', default=False, action='store_true')
+    parser.add_argument('--context', default='paper')
+    parser.add_argument('--style', default='whitegrid')
+    parser.add_argument('--font-scale', default=1.5, type=int)
 
     return parser
 
 
 def load_and_plot_data(args):
+    set_seaborn_defaults(palette=args.palette,
+                         style=args.style,
+                         context=args.context,
+                         font_scale=args.font_scale)
+
     data = load_data_for_experiments(args.paths,
                                      save_type=args.save_type,
                                      truncate_to_min=args.truncate_to_min,
