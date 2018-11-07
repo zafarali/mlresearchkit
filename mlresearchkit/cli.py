@@ -6,9 +6,10 @@ research environment for machine learning setup. Here are some of the things
 you can do with this tool via the command line:
 # Run a python script on a cluster (for example on Compute Canada)
 use `mlresearchkit cluster-submit` to run things!
-
 # Set up a new research environment
 use `mlresearchkit new-env` to set up a template directory for a new research environment.
+# Plot data easily
+use `mlresearchkit plot`
 """
 WELCOME = '# mlresearchkit {} created by {}'.format(__version__, __author__)
 def main():
@@ -40,7 +41,11 @@ def main():
         print(WELCOME)
         print('New research environment')
         sys.exit(0)
-
+    elif sys.argv[1] == 'plot':
+        from .command_line_programs import plot
+        parser = plot.create_argparse()
+        args = parser.parse_args(sys.argv[2:])
+        plot.load_and_plot_data(args)
     else:
         print('Unknown command was given!')
         sys.exit(1)
