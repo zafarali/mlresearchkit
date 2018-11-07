@@ -26,7 +26,9 @@ def create_cc_arguments(parser):
                         and "days-hours:minutes:seconds". FOR PBS: "hours:minutes:seconds" """,
                         default='00:15:00')
     parser.add_argument('-cc-cpus', '--cc-cpus', type=int, default=1,
-                        help='CPUs to request')
+                        help='CPUs to request per task.')
+    parser.add_argument('-cc-tasks', '--cc-tasks', type=int, default=1,
+                        help='Number of tasks.')
     parser.add_argument('-cc-mem', '--cc-mem', default=8192, type=int)
     parser.add_argument('-cc-queue', '--cc-queue', default='debug', type=str)
     parser.add_argument('-cc-account', '--cc-account', required=True)

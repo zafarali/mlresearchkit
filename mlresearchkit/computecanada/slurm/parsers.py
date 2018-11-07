@@ -4,7 +4,8 @@ TEMPLATE = """#!/bin/bash
 #SBATCH --account={JOBACCOUNT}
 #SBATCH --time={JOBTIME}
 #SBATCH --job-name={JOBNAME}
-#SBATCH --ntasks={N_CPUS}
+#SBATCH --ntasks={N_TASKS}
+#SBATCH --cpus-per-task={N_CPUS}
 #SBATCH -o {LOGDIR}/{OUTFILE}.out
 #SBATCH -e {LOGDIR}/{ERRORFILE}.err
 #SBATCH --mem={JOBMEM}M"""
@@ -17,6 +18,7 @@ def create_slurm_header(args):
     """
     tmpstr = TEMPLATE.format(JOBACCOUNT=args.cc_account,
                              JOBTIME=args.cc_time,
+                             N_TASKS=args.cc_tasks,
                              N_CPUS=args.cc_cpus,
                              JOBNAME=args.cc_job_name,
                              OUTFILE=args.cc_job_name,
