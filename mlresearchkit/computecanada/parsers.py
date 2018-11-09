@@ -37,8 +37,6 @@ def create_cc_arguments(parser):
                         help='The amount of memory in MB for the job.')
     parser.add_argument('--cc_queue', default='debug', type=str,
                         help='The queue to run on.')
-    parser.add_argument('--cc_other', '--cc-other', default='',
-                        help='Other arguments to append to the run')
     parser.add_argument('--cc_mail', metavar='YOU@MAIL.COM', default=False, type=str,
                         help='Sends a mail to you when done')
     parser.add_argument('--cc_cluster', default=clusters.CEDAR, type=str,
