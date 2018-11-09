@@ -1,2 +1,2 @@
-from . import clusters
-from .parsers import create_cc_arguments
+from mlresearchkit.computecanada import clusters
+from mlresearchkit.computecanada.parsers import create_cc_arguments
