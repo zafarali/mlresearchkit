@@ -45,3 +45,11 @@ def create_folder_name(outfolder, experiment_name, alternative='results'):
         folder_name = '{}_{}'.format(alternative, time.strftime('%a-%d-%m-%Y__%H-%M-%s'))
 
     return os.path.join(outfolder, folder_name)
+
+def stash(path, text):
+    """Stash text into an end of a file."""
+    with open(path, 'a') as f:
+        if type(text) is list:
+            f.write('\n'.join(text))
+        else:
+            f.write('\n'+text)
